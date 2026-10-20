@@ -19,10 +19,12 @@ Each space directory contains:
 - `README.md`: the landing page of the space
 - `SUMMARY.md`: the table of contents of the space
 
+The user site configuration, `gitbook-docs.yaml`, is in `documentation/`. It maps each space of the site to its directory. Add an entry to it when you create a new space for the site.
+
 ## Publish changes
 
 1. In GitBook, open the space and enable **Git Sync** for this repository.
-2. Set the project directory to the space directory, such as `documentation/`.
+2. Set the project directory to the directory that contains the site's `gitbook-docs.yaml`, such as `documentation`.
 3. Push changes to the default branch. GitBook syncs them automatically.
 
 ## Brand settings

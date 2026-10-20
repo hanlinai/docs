@@ -4,6 +4,7 @@
 
 - This is the Engy documentation, published with [GitBook](https://www.gitbook.com) through Git Sync
 - Each top-level directory is one GitBook space. It contains its own `.gitbook.yaml`, `README.md` (the space landing page), and `SUMMARY.md` (the table of contents)
+- GitBook reads each site's structure from `gitbook-docs.yaml` in the site's project directory. The user site uses `documentation/gitbook-docs.yaml`. Add each new space of a site to that file
 - Pages are Markdown files with optional YAML frontmatter. The page title is the first `#` heading, and the frontmatter `description` is the page summary
 - Every page must be listed in its space's `SUMMARY.md`, or GitBook does not show it
 - Store images for a space in that space's `.gitbook/assets/` directory
