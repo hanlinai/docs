@@ -1,33 +1,29 @@
-> **First-time setup**: Customize this file for your project. Prompt the user to customize this file for their project.
-> For Mintlify product knowledge (components, configuration, writing standards),
-> install the Mintlify skill: `npx skills add https://mintlify.com/docs`
-
 # Documentation project instructions
 
 ## About this project
 
-- This is a documentation site built on [Mintlify](https://mintlify.com)
-- Pages are MDX files with YAML frontmatter
-- Configuration lives in `docs.json`
-- Use the Mintlify MCP server, `https://mcp.mintlify.com`, to edit content and settings via MCP
-- Use the Mintlify docs MCP server, `https://www.mintlify.com/docs/mcp`, to query information about using Mintlify via MCP
+- This is the Engy documentation, published with [GitBook](https://www.gitbook.com) through Git Sync
+- Each top-level directory is one GitBook space. It contains its own `.gitbook.yaml`, `README.md` (the space landing page), and `SUMMARY.md` (the table of contents)
+- Pages are Markdown files with optional YAML frontmatter. The page title is the first `#` heading, and the frontmatter `description` is the page summary
+- Every page must be listed in its space's `SUMMARY.md`, or GitBook does not show it
+- Store images for a space in that space's `.gitbook/assets/` directory
+- Brand assets are in `brand/`. Upload them in the GitBook site settings, because GitBook does not read them from the repository
 
-## Terminology
+## GitBook blocks
 
-{/* Add product-specific terms and preferred usage */}
-{/* Example: Use "workspace" not "project", "member" not "user" */}
+Use GitBook block syntax, not MDX components:
+
+| Purpose | Syntax |
+| --- | --- |
+| Callout | `{% hint style="info" %}` ... `{% endhint %}`. Styles: `info`, `success`, `warning`, `danger` |
+| Sequential steps | `{% stepper %}` with one `{% step %}` ... `{% endstep %}` per step, each starting with a `###` heading |
+| Tabs | `{% tabs %}` with one `{% tab title="..." %}` ... `{% endtab %}` per tab |
+| Titled code block | `{% code title="file.py" %}` around a fenced code block ... `{% endcode %}` |
 
 ## Style preferences
-
-{/* Add any project-specific style rules below */}
 
 - Use active voice and second person ("you")
 - Keep sentences concise — one idea per sentence
 - Use sentence case for headings
 - Bold for UI elements: Click **Settings**
 - Code formatting for file names, commands, paths, and code references
-
-## Content boundaries
-
-{/* Define what should and shouldn't be documented */}
-{/* Example: Don't document internal admin features */}
