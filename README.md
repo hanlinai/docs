@@ -1,55 +1,39 @@
-# Mintlify Starter Kit
+# Engy documentation
 
-Use the starter kit to get your docs deployed and ready to customize.
+This repository contains the source of the Engy documentation. GitBook publishes it through Git Sync.
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+## Repository structure
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
+The documentation is published as two GitBook sites:
 
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
+| Directory | GitBook space | Site | Audience |
+| --- | --- | --- | --- |
+| `documentation/` | Documentation | User docs (`docs.engy.ai`) | Users who integrate with Engy |
+| `brand/` | Not synced | Not published | Logo and icon for the GitBook site settings |
 
-## AI-assisted writing
+The provider site will contain the `providers/` and `sn53-network/` spaces when their first pages are written.
 
-Set up your AI coding tool to work with Mintlify:
+Each space directory contains:
 
-```bash
-npx skills add https://mintlify.com/docs
-```
+- `.gitbook.yaml`: the Git Sync configuration for the space
+- `README.md`: the landing page of the space
+- `SUMMARY.md`: the table of contents of the space
 
-This command installs Mintlify's documentation skill for your configured AI tools like Claude Code, Cursor, Windsurf, and others. The skill includes component reference, writing standards, and workflow guidance.
+The user site configuration, `gitbook-docs.yaml`, is in `documentation/`. It maps each space of the site to its directory. Add an entry to it when you create a new space for the site.
 
-See the [AI tools guides](/ai-tools) for tool-specific setup.
+## Publish changes
 
-## Development
+1. In GitBook, open the space and enable **Git Sync** for this repository.
+2. Set the project directory to the directory that contains the site's `gitbook-docs.yaml`, such as `documentation`.
+3. Push changes to the default branch. GitBook syncs them automatically.
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
+## Brand settings
 
-```
-npm i -g mint
-```
+Configure the following values in the GitBook site customization settings:
 
-Run the following command at the root of your documentation, where your `docs.json` is located:
-
-```
-mint dev
-```
-
-View your local preview at `http://localhost:3000`.
-
-## Publishing changes
-
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
-
-## Need help?
-
-### Troubleshooting
-
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
-
-### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
+| Setting | Value |
+| --- | --- |
+| Logo | `brand/logo.svg` |
+| Icon | `brand/icon.svg` |
+| Primary color (light mode) | `#E8541C` |
+| Primary color (dark mode) | `#FF6A38` |
