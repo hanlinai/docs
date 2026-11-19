@@ -1,0 +1,11 @@
+$schema: https://api.gitbook.com/gitbook-docs.yaml
+site:
+  title: Engy Provider Docs
+  structure:
+    - type: space
+      key: providers
+      title: Providers
+      path: providers
+      default: true
+      content:
+        directory: ./
