@@ -31,4 +31,4 @@ A provider is a miner on Bittensor subnet 53 (SN53). Throughout this documentati
 
 ## Provider portal
 
-You manage your account and workers in the provider portal at [provider.engy.ai/dashboard](https://provider.engy.ai/dashboard). The portal has the following pages: **Workers**, **Gateway key**, **Rewards**, and **Notifications**.
+You manage your account and workers in the provider portal at [provider.engy.ai/dashboard](https://provider.engy.ai/dashboard). The portal has the following pages: **Servers**, **Workers**, **Gateway key**, **Rewards**, and **Notifications**.
