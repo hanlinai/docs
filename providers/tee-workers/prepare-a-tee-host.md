@@ -84,6 +84,6 @@ After verification, open the server in the portal and check its **Provisioning t
 | Event | Meaning |
 | --- | --- |
 | `cpu-tee: tdx` | Engy verified the TDX quote. The worker is a TEE worker. |
-| `cpu-tee: none` | Engy did not receive a valid TDX quote. The worker is verified as a standard worker. |
+| `cpu-tee: none` | Engy did not receive a valid CPU TEE quote. Verification fails, unless the server has 8 B200 or 8 B300 GPUs. |
 
 If the event is `cpu-tee: none`, check the configuration above, and then click **retry**. Retry is available until the worker is activated.

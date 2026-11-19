@@ -22,7 +22,7 @@ Each model is served from one fixed Hugging Face checkpoint. Serve exactly this 
 | `kimi-k3` | `moonshotai/Kimi-K3` | 8 × B300 |
 | `MiniMax-H3` | `MiniMaxAI/MiniMax-H3` | Video generation model |
 
-The GPU class is a minimum. A newer class also qualifies, in the order A100, H100, H200, B200, B300. On confidential-computing hosts, Engy checks the hardware during attestation. The GPU class must be the listed class or newer, and the GPU count must match exactly.
+The GPU class is a minimum. A newer class also qualifies, in the order A100, H100, H200, B200, B300. Engy checks the hardware during verification. The GPU class must be the listed class or newer, and the GPU count must match exactly.
 
 When you register a worker, the portal lists the models that are currently accepting new workers. The list can differ from this table.
 

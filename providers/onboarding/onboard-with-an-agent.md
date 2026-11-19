@@ -84,7 +84,7 @@ Optional: `HF_TOKEN` for gated Hugging Face weights, and `ENGY_PROVIDER_URL` (de
 | `ENGY_PROVIDER_URL` | Optional. Default `https://provider.engy.ai`. |
 | `HF_TOKEN` | Optional. A Hugging Face token for gated weights. |
 
-The script is safe to run again. It refreshes the summary, and does nothing new when the server already runs the model.
+The script is safe to run again when the server is healthy: it refreshes the summary, and does nothing new when the server already runs the model. Do not rerun it to poll. When the first worker is `failed` and the model matches, a rerun re-declares the worker, which acts as a retry without checking the reason.
 
 ### Summary
 
@@ -102,7 +102,7 @@ With `--json`, the script prints one JSON object:
 
 ## Polling
 
-Rerun `sh engy-onboard.sh --model <model> --json` every 60 seconds, or call `GET /api/portal/servers/<serverId>` at the same interval. Stop when `done` is `true`, when a worker shows `failed`, or when the miner tells you to stop.
+Call `GET /api/portal/servers/<serverId>` (the `status_url` from the summary) every 60 seconds. Do not poll by rerunning the script. Stop when `done` is `true`, when a worker shows `failed`, or when the miner tells you to stop.
 
 Typical durations, which are not guaranteed:
 
@@ -203,6 +203,8 @@ Choosing a different model on a server retires its current workers and creates n
 
 `POST /api/portal/tee-workers/<workerId>/retry`
 
+Call it only for a worker in `failed`.
+
 Response: `{"ok": true, "worker_id": "...", "provisioning": "declared"}`.
 
 Errors: `409` `{"error": "not retryable from '<state>'", "provisioning": "<state>"}` for `allocated`, `booted`, `declared`, `provisioned`, `deleted`, and `superseded`. `422` when the hardware is not accepted for the worker's model.
@@ -236,8 +238,9 @@ In your own `curl` calls, `-H "Authorization: Bearer $ENGY_MINER_KEY"` is accept
 
 ### Failed workers
 
-A worker in `failed` shows its `reason` in the worker's `events`. After you or the miner correct the cause, call retry. A retry works from any state except `allocated`, `booted`, `declared`, `provisioned`, `deleted`, and `superseded`. A typical cause you can correct:
+A worker in `failed` shows its `reason` in the worker's `events`. Call retry only for a worker in `failed`. Never call it for a worker in another state, because retry on an in-flight state resets it to `declared`. After you or the miner correct the cause, call retry. Retryable `failed` reasons you can correct:
 
 * The SSH port is not reachable from the internet. Open it, or register a different one through the endpoint route, and then retry.
+* `health check: unreachable after 3 consecutive probes`. Restore SSH access on the registered port, and then retry.
 
 If the reason points to anything else, such as an internal error or a hardware mismatch, stop and report it to the miner. For the miner-side flow, see [Manage workers](../operations/manage-workers.md) and [Troubleshooting](../operations/troubleshooting.md).

@@ -29,7 +29,7 @@ This page lists common problems and their solutions. It is intended for provider
 | The server fails because the key does not match the issued key. | Set `ENGY_MINER_KEY` to your current gateway key, restart the container, and click **retry**. |
 | A TEE server fails because the GPU class is too low or the GPU count is wrong. | Check the [frontier model requirements](../tee-workers/overview.md#frontier-model-requirements), or choose a model that your hardware supports. |
 | A TEE server fails because the hardware is already in use. | The GPUs are bound to another of your workers. Switch that server to another model, and then click **retry**. |
-| The **Provisioning timeline** of a TEE server shows `cpu-tee: none`. | Engy did not receive a valid TDX quote. Check the configuration in [Prepare a TEE host](../tee-workers/prepare-a-tee-host.md). |
+| The **Provisioning timeline** shows `cpu-tee: none` and verification fails. | Engy did not receive a valid CPU TEE quote, and the server is not an 8 B200 or 8 B300 server. Check the configuration in [Prepare a TEE host](../tee-workers/prepare-a-tee-host.md). |
 
 ## Traffic
 

@@ -22,9 +22,9 @@ Engy checks the following:
 
 * Engy can reach the server over the SSH port that you registered.
 * The gateway key on the server matches the key that you claimed.
-* On a confidential-computing host, the hardware attestation is valid and meets the GPU class and count that the selected model requires. For details, see [TEE workers overview](../tee-workers/overview.md).
+* The CPU TEE evidence (Intel TDX or AMD SEV-SNP) is valid, and the hardware meets the GPU class and count that the selected model requires. Servers with 8 B200 or 8 B300 GPUs need no CPU TEE. GPU confidential-computing mode is not required. For details, see [TEE workers overview](../tee-workers/overview.md).
 
-Engy determines whether a worker is a TEE worker from the verified attestation, not from the server's own claim.
+Engy takes the result from the verified evidence, not from the server's own claim.
 
 ## Activation
 
@@ -41,8 +41,6 @@ The server moves to the `failed` state, and the server page shows the reason. Co
 
 * The SSH port is not reachable from the internet.
 * The gateway key on the server does not match your claimed key.
-* On a TEE host, the attestation is invalid or does not meet the model's hardware requirements.
-
-If Engy cannot collect attestation evidence, it does not fail the server. It verifies the server as a standard worker instead.
+* The server has no valid CPU TEE (Intel TDX or AMD SEV-SNP) and is not an 8 B200 or 8 B300 server, or the evidence is invalid, or the hardware does not meet the model's requirements.
 
 Engy does not retry a failed verification automatically. Correct the problem, and then click **retry** or **update & re-drive**. For details, see [Manage workers](../operations/manage-workers.md).

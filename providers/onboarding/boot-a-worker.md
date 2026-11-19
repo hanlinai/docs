@@ -41,10 +41,12 @@ Engy pins the image by digest. Download the onboarding script, and read the pinn
 
 ```bash
 curl -fsSLO https://provider.engy.ai/engy-onboard.sh
-grep '^ENGY_IMAGE=' engy-onboard.sh
+sed -n 's/^ENGY_IMAGE="${ENGY_IMAGE:-\(.*\)}"$/\1/p' engy-onboard.sh
 ```
 
-The value after `:-` is the reference, in the form `ghcr.io/...@sha256:...`. Use it exactly. Do not use a tag.
+The output is the reference, in the form `ghcr.io/...@sha256:...`. Use it exactly. Do not use a tag.
+
+A copy of the script from a source repository has the literal `__ENGY_IMAGE__` in place of the reference. Download the script from `provider.engy.ai` as shown, or set `ENGY_IMAGE` to a digest-pinned image.
 
 ```bash
 docker pull "<image reference>"

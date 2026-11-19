@@ -18,8 +18,11 @@ The **state** column of the **Servers** table shows the onboarding state until t
 | `verifying` | Engy is verifying the server. | None |
 | `verified` | The server passed verification and is queued for deployment. | None |
 | `starting` | Engy is downloading the model and starting the inference engine. | None |
+| `awaiting_verification`, `awaiting_review` | Engy is reviewing the worker. | None |
 | `provisioned` | Serving is up. The column now shows the worker's routing state. | None |
 | `failed` | Onboarding failed, or Engy lost SSH access to the server after it was verified. The server page shows the reason. | Correct the problem, and then click **retry** or use **Update endpoint**. |
+| `superseded` | You chose another model for the server, and a new worker replaced this one. | None |
+| `deleted` | The worker was deleted. | None |
 
 Deleted servers are removed from the list. When you switch a server to another model, Engy retires the previous worker, and the server shows the new worker.
 

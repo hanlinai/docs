@@ -4,11 +4,11 @@ description: Run Engy workers on confidential-computing hardware, and understand
 
 # TEE workers overview
 
-This page explains TEE workers, which run on confidential-computing hardware and are verified with a hardware attestation. It is intended for providers who operate hosts with Intel TDX.
+This page explains TEE workers, which run on confidential-computing hardware and are verified with a hardware attestation. It is intended for providers who operate hosts with Intel TDX or AMD SEV-SNP.
 
 ## What a TEE worker is
 
-A TEE worker runs inside an Intel TDX confidential virtual machine. During verification, Engy checks hardware evidence that the worker runs in a genuine TDX guest and, for frontier models, on genuine NVIDIA GPUs.
+A TEE worker runs inside an Intel TDX or AMD SEV-SNP confidential virtual machine. During verification, Engy checks hardware evidence that the worker runs in a genuine TDX or SEV-SNP guest and, for frontier models, on genuine NVIDIA GPUs.
 
 TEE workers use the same Engy image and the same onboarding steps as other workers. You do not need a separate procedure.
 
@@ -17,19 +17,19 @@ TEE workers use the same Engy image and the same onboarding steps as other worke
 | Image | Engy image | Engy image |
 | Onboarding | [Boot a worker](../onboarding/boot-a-worker.md) | [Boot a worker](../onboarding/boot-a-worker.md) |
 | Verification | SSH access and gateway key check | Hardware attestation, SSH access, and gateway key check |
-| Provisioning timeline event | `cpu-tee: none` | `cpu-tee: tdx` |
+| Provisioning timeline event | `cpu-tee: none` (8 B200 or 8 B300 only) | `cpu-tee: tdx` or SEV-SNP |
 
 ## How Engy determines the worker type
 
-Engy sets the worker type from the evidence that it verifies, not from the server's own report. A worker is a TEE worker when Engy verifies an Intel TDX quote that is bound to that verification run. Engy determines the type again each time the worker is verified, including after a retry.
+Engy sets the worker type from the evidence that it verifies, not from the server's own report. A worker is a TEE worker when Engy verifies an Intel TDX or AMD SEV-SNP report that is bound to that verification run. Engy determines the type again each time the worker is verified, including after a retry.
 
-If Engy does not receive a valid TDX quote, it verifies the server as a standard worker.
+Every server needs a CPU TEE, Intel TDX or AMD SEV-SNP, except servers with 8 B200 or 8 B300 GPUs. If Engy does not receive valid CPU TEE evidence from any other server, verification fails. GPU confidential-computing mode is not required.
 
 ## Hardware requirements
 
 A TEE host needs the following:
 
-* A CPU with Intel TDX, with the worker running in a TDX guest
+* A CPU with Intel TDX or AMD SEV-SNP, with the worker running in a TDX or SEV-SNP guest
 * For frontier models, 8 NVIDIA data-center GPUs that produce NVIDIA-signed attestation reports, such as H100, H200, B200, or B300
 
 For the host configuration, see [Prepare a TEE host](prepare-a-tee-host.md).
@@ -61,7 +61,7 @@ On a TDX host, if a frontier model fails the hardware checks, verification fails
 
 A newer GPU class also qualifies, in the order A100, H100, H200, B200, B300.
 
-`qwen3.6-35b-a3b` has no hardware requirement. On a TDX host, it is verified as a TEE worker without the GPU class and count checks.
+`qwen3.6-35b-a3b` has no hardware requirement. On a TDX or SEV-SNP host, it is verified without the GPU class and count checks.
 
 ## Zero data retention
 
@@ -71,5 +71,4 @@ To have a worker certified, [apply as an approved provider](../onboarding/apply-
 
 ## Limitations
 
-* AMD SEV-SNP hosts are verified as standard workers.
 * Consumer GPUs, such as the RTX 5090, do not produce GPU attestation reports. They cannot serve frontier models as TEE workers.

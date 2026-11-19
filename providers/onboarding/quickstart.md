@@ -47,7 +47,7 @@ sh engy-onboard.sh --model <model>
 
 The script checks the server, starts the Engy worker container, registers the server, and registers the model and SSH endpoint for you. It then prints a summary and exits. Engy verifies the machine and sets up serving on its own.
 
-The server is done when the summary shows `done: yes`. Run the script again to refresh the summary, or watch the server under **Servers** in the portal. Verification typically takes minutes. Serving setup, which includes the weight download and compile, typically takes one to several hours, depending on the model.
+The server is done when the summary shows `done: yes`. Watch the server under **Servers** in the portal. Do not rerun the script to check progress. Verification typically takes minutes. Serving setup, which includes the weight download and compile, typically takes one to several hours, depending on the model.
 {% endstep %}
 {% endstepper %}
 
