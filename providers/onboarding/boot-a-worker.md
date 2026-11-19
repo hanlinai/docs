@@ -29,12 +29,25 @@ Before you begin, make sure you have:
 
 ## Boot the image
 
+{% hint style="info" %}
+The fastest way to do stages 1 to 3 is the onboarding script. For details, see [Quickstart](quickstart.md). The steps below start the container yourself.
+{% endhint %}
+
 {% stepper %}
 {% step %}
-### Pull the image
+### Get the image reference
+
+Engy pins the image by digest. Download the onboarding script, and read the pinned reference from it:
 
 ```bash
-docker pull ghcr.io/hanlinai/engy-golden-serve:prod
+curl -fsSLO https://provider.engy.ai/engy-onboard.sh
+grep '^ENGY_IMAGE=' engy-onboard.sh
+```
+
+The value after `:-` is the reference, in the form `ghcr.io/...@sha256:...`. Use it exactly. Do not use a tag.
+
+```bash
+docker pull "<image reference>"
 ```
 
 The image is about 14 GB. The first pull can take several minutes.
@@ -43,22 +56,27 @@ The image is about 14 GB. The first pull can take several minutes.
 {% step %}
 ### Start the container with your gateway key
 
-Set `ENGY_MINER_KEY` to your gateway key in the container environment, give the container GPU access, and publish its SSH port. The image runs its SSH server on port 22 inside the container. The following example publishes it on host port `2222`:
+Set `ENGY_MINER_KEY` to your gateway key in the container environment, give the container GPU access, and publish its SSH port. The image runs its SSH server on port 22 inside the container. The container needs two persistent host directories. The following example uses `/data/engy` and publishes the SSH port on host port `2222`:
 
 ```bash
+mkdir -p /data/engy/runtime /data/engy/models
+
 docker run -d --name engy-worker \
   --gpus all \
+  --shm-size 64g \
   -p 2222:22 \
   -e ENGY_MINER_KEY="mk-..." \
-  -v /data/engy-models:/root/models \
-  ghcr.io/hanlinai/engy-golden-serve:prod
+  -v /data/engy/runtime:/root/engy \
+  -v /data/engy/models:/root/models \
+  "<image reference>"
 ```
 
-The image downloads the model weights to `/root/models` in the container. The `-v` option keeps them on persistent host storage, so that they survive container rebuilds.
+* `/root/engy` keeps the runtime state and deployment files. Engy relies on them after a restart.
+* `/root/models` keeps the model weights, so that they survive container rebuilds.
 
 Note the host port. You enter it as the SSH port when you register the endpoint. On a GPU cloud, map container port 22 to an external port in the template, and use the external port.
 
-`ENGY_MINER_KEY` is the only value that you set. Do not set a worker ID or a model. Engy assigns the worker ID, and you choose the model in the portal.
+`ENGY_MINER_KEY` is the only value that you set. Do not set a worker ID or a model. Engy assigns the worker ID, and you choose the model in the portal or with the script.
 
 If the model weights are gated on Hugging Face, also set `HF_TOKEN` to a Hugging Face access token.
 

@@ -11,6 +11,8 @@
 
 ## Onboarding
 
+* [Quickstart](onboarding/quickstart.md)
+* [Onboard with an agent](onboarding/onboard-with-an-agent.md)
 * [Create your provider account](onboarding/create-your-provider-account.md)
 * [Boot a worker](onboarding/boot-a-worker.md)
 * [Register the endpoint](onboarding/register-the-endpoint.md)
