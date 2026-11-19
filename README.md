@@ -9,9 +9,10 @@ The documentation is published as two GitBook sites:
 | Directory | GitBook space | Site | Audience |
 | --- | --- | --- | --- |
 | `documentation/` | Documentation | User docs (`docs.engy.ai`) | Users who integrate with Engy |
+| `providers/` | Providers | Provider docs (Engy Provider Docs) | GPU providers and miners |
 | `brand/` | Not synced | Not published | Logo and icon for the GitBook site settings |
 
-The provider site will contain the `providers/` and `sn53-network/` spaces when their first pages are written.
+The provider site configuration, `gitbook-docs.yaml`, is in `providers/`. Set the provider site's Git Sync project directory to `providers`.
 
 Each space directory contains:
 
