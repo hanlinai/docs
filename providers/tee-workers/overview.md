@@ -12,6 +12,8 @@ A TEE worker runs inside an Intel TDX or AMD SEV-SNP confidential virtual machin
 
 TEE workers use the same Engy image and the same onboarding steps as other workers. You do not need a separate procedure.
 
+The onboarding script currently supports preferred hardware only (8 B200 or 8 B300 GPUs). It refuses a TEE host with other GPUs. On a TEE host, follow [Prepare a TEE host](prepare-a-tee-host.md) and then [Boot a worker](../onboarding/boot-a-worker.md).
+
 | Aspect | Standard worker | TEE worker |
 | --- | --- | --- |
 | Image | Engy image | Engy image |
@@ -38,14 +40,14 @@ For the host configuration, see [Prepare a TEE host](prepare-a-tee-host.md).
 
 During verification, the Engy image collects attestation evidence from the CPU and the GPUs. Engy checks the following:
 
-* The TDX quote is genuine.
+* The TDX quote or SEV-SNP report is genuine.
 * The evidence is bound to this worker, your gateway key, and a fresh challenge, so that it cannot be replayed from another server.
 * For frontier models, the GPU evidence is genuine, the GPU class meets the minimum for the model, and the server has exactly 8 GPUs.
 * The GPUs and the platform are not bound to the current attestation of another worker.
 
 When you switch a server to another model, Engy releases the attestation of the previous worker, so the last check does not block the new worker.
 
-On a TDX host, if a frontier model fails the hardware checks, verification fails. The server page shows the reason.
+On a TDX or SEV-SNP host, if a frontier model fails the hardware checks, verification fails. The server page shows the reason.
 
 ### Frontier model requirements
 

@@ -18,6 +18,7 @@ This page lists what you need before you onboard a worker. It is intended for pr
 | GPU | NVIDIA GPUs. The GPU class and count depend on the model. For details, see [Supported models](supported-models.md). |
 | Architecture | x86-64 (amd64). Arm64 systems, such as GB200 and GB300, are not supported. |
 | Storage | Enough disk space for the Engy image (about 14 GB) and the model weights. Keep the runtime state and the model weights on persistent host directories, so that they survive a container rebuild. |
+| Model disk (preferred hardware) | The filesystem that holds the model weights must have a total size of at least 1000 GB for 8 B200 GPUs, or 2000 GB for 8 B300 GPUs. |
 
 ## Network
 

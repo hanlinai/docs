@@ -13,6 +13,7 @@ Raw link for agents: `https://raw.githubusercontent.com/hanlinai/docs/main/provi
 * The miner onboards a **server**. A server can run several workers, for example with some DeepSeek layouts.
 * Sibling workers appear only after the first worker is verified. The server is **done** when every current worker of the server is active (`provisioned`).
 * Worker IDs are outputs. Read them from a response. Never choose or invent one.
+* The script currently onboards preferred hardware only: 8 B200 or 8 B300 GPUs, with enough model disk (see [Requirements](../overview/requirements.md#hardware)). A TEE host (Intel TDX or AMD SEV-SNP) with other GPUs is refused at preflight. For a TEE host, follow [Prepare a TEE host](../tee-workers/prepare-a-tee-host.md) instead.
 
 ## Inputs
 
@@ -63,7 +64,7 @@ Optional: `HF_TOKEN` for gated Hugging Face weights, and `ENGY_PROVIDER_URL` (de
    sh engy-onboard.sh --model <model> --json
    ```
 
-5. Read the summary. Poll until `done` is `true`. See [Polling](#polling).
+5. Read the summary. Poll the server until it is done. See [Polling](#polling).
 
 ### Script options
 
@@ -96,13 +97,17 @@ With `--json`, the script prints one JSON object:
 | `state` | The server's state. See [States](#states). |
 | `model` | The model of the server's first worker. |
 | `ssh_host`, `ssh_port` | The SSH endpoint that Engy uses. |
-| `done` | `true` when every current worker is `provisioned`. |
+| `done` | `true` when every current worker is `provisioned`, at the time the script ran. The server detail does not have this field. |
 | `workers` | One entry per current worker: `slot`, `worker_id`, `model`, `provisioning`. |
 | `status_url` | The API URL for this server. See `GET /api/portal/servers/<serverId>`. |
 
 ## Polling
 
-Call `GET /api/portal/servers/<serverId>` (the `status_url` from the summary) every 60 seconds. Do not poll by rerunning the script. Stop when `done` is `true`, when a worker shows `failed`, or when the miner tells you to stop.
+Call `GET /api/portal/servers/<serverId>` (the `status_url` from the summary) every 60 seconds. Do not poll by rerunning the script. The response has no `done` field. Check `server.workers` instead:
+
+* The server is done when `workers` is not empty and every `workers[].provisioning` is `provisioned`.
+* Stop when any worker's `provisioning` is `failed`. Read its reason with `GET /api/portal/tee-workers/<workerId>`, because the server's `events` cover only the first worker. See [Failed workers](#failed-workers).
+* Stop when the miner tells you to stop.
 
 Typical durations, which are not guaranteed:
 
@@ -117,7 +122,7 @@ The server's `state` follows its first worker while onboarding runs. After the w
 
 | Worker state | Meaning | Your action |
 | --- | --- | --- |
-| `booted` | The container started and registered the server. | The script registers the model and endpoint. |
+| `booted` | The server registered. | The script starts the container and registers the model and endpoint. |
 | `declared` | The model and endpoint are registered. | Wait. |
 | `reachable`, `verifying` | Engy is verifying the machine. | Wait. |
 | `verified` | The machine passed verification. | Wait. |
@@ -130,7 +135,7 @@ The server's `state` follows its first worker while onboarding runs. After the w
 
 ## API reference
 
-Every route below accepts `Authorization: Bearer mk-...`. Key claim, key rotation (`POST /api/portal/key`), and sign-in accept a wallet signature only.
+Every route below except self-register, which takes the key in the body, accepts `Authorization: Bearer mk-...`. Key claim, key rotation (`POST /api/portal/key`), and sign-in accept a wallet signature only.
 
 All routes use `https://provider.engy.ai` as the base URL (or `ENGY_PROVIDER_URL`). Send JSON bodies with `Content-Type: application/json`.
 
@@ -229,7 +234,7 @@ Response: `{"models": ["<model>", ...]}`, the models that currently accept new w
 | --- | --- | --- |
 | `0` | Success. | Read the summary. |
 | `2` | Bad input, such as a missing or malformed Miner Key, or an invalid option. | Fix the input, and rerun. |
-| `3` | Preflight failed. The message names the check, such as the driver version, disk, memory, or outbound access. | Report it to the miner. Fix only what the miner approves. |
+| `3` | Preflight failed. The message names the check: root access, GPUs and NVIDIA driver (580 or later), verification policy (preferred hardware and its model-disk floor), free disk space, SSH port in use, reachability of the gateway and the provider, or `python3`. | Report it to the miner. Fix only what the miner approves. |
 | `4` | Docker or the worker container failed. | Read the Docker output. Check `docker compose -p engy logs`. |
 | `5` | A provider API call failed. | Check the Miner Key and the network, and rerun. |
 | `6` | The model and endpoint were refused: `422` means the hardware is not accepted for that model, and `409` means a conflict, such as the server already running another model. | For `409` on a switch, rerun with `--switch-model` only if the miner agreed. For `422`, tell the miner which hardware the response allows. |
@@ -238,7 +243,7 @@ In your own `curl` calls, `-H "Authorization: Bearer $ENGY_MINER_KEY"` is accept
 
 ### Failed workers
 
-A worker in `failed` shows its `reason` in the worker's `events`. Call retry only for a worker in `failed`. Never call it for a worker in another state, because retry on an in-flight state resets it to `declared`. After you or the miner correct the cause, call retry. Retryable `failed` reasons you can correct:
+A worker in `failed` shows its `reason` in `GET /api/portal/tee-workers/<workerId>`: the `reason` field and the worker's `events`. Call retry only for a worker in `failed`. Never call it for a worker in another state, because retry on an in-flight state resets it to `declared`. After you or the miner correct the cause, call retry. Retryable `failed` reasons you can correct:
 
 * The SSH port is not reachable from the internet. Open it, or register a different one through the endpoint route, and then retry.
 * `health check: unreachable after 3 consecutive probes`. Restore SSH access on the registered port, and then retry.

@@ -8,6 +8,8 @@ This page explains the fastest way to onboard a GPU server. It is intended for p
 
 A Miner Key is the key that the portal shows under **Gateway key**. For details, see [Create your provider account](create-your-provider-account.md).
 
+The script currently onboards preferred hardware only: servers with 8 B200 or 8 B300 GPUs and enough model disk. For other hardware, use a TEE host. For details, see [Prepare a TEE host](../tee-workers/prepare-a-tee-host.md).
+
 You onboard a server, not a single worker. A server can run several workers, for example with some DeepSeek layouts. Sibling workers appear after the first worker is verified. The server is done when every worker of the server is active.
 
 ## Onboard a server
@@ -45,9 +47,9 @@ sh engy-onboard.sh
 sh engy-onboard.sh --model <model>
 ```
 
-The script checks the server, starts the Engy worker container, registers the server, and registers the model and SSH endpoint for you. It then prints a summary and exits. Engy verifies the machine and sets up serving on its own.
+The script checks the server, registers the server, starts the Engy worker container, and registers the model and SSH endpoint for you. It then prints a summary and exits. Engy verifies the machine and sets up serving on its own.
 
-The server is done when the summary shows `done: yes`. Watch the server under **Servers** in the portal. Do not rerun the script to check progress. Verification typically takes minutes. Serving setup, which includes the weight download and compile, typically takes one to several hours, depending on the model.
+Watch the server under **Servers** in the portal, or at the `status` URL that the summary prints. The server is done when every worker of the server is `provisioned`. Do not rerun the script to check progress. Verification typically takes minutes. Serving setup, which includes the weight download and compile, typically takes one to several hours, depending on the model.
 {% endstep %}
 {% endstepper %}
 

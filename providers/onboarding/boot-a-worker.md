@@ -30,7 +30,7 @@ Before you begin, make sure you have:
 ## Boot the image
 
 {% hint style="info" %}
-The fastest way to do stages 1 to 3 is the onboarding script. For details, see [Quickstart](quickstart.md). The steps below start the container yourself.
+On preferred hardware (8 B200 or 8 B300 GPUs), the fastest way to do stages 1 to 3 is the onboarding script. For details, see [Quickstart](quickstart.md). The steps below start the container yourself.
 {% endhint %}
 
 {% stepper %}
