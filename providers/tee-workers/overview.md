@@ -25,7 +25,7 @@ The onboarding script currently supports preferred hardware only (8 B200 or 8 B3
 
 Engy sets the worker type from the evidence that it verifies, not from the server's own report. A worker is a TEE worker when Engy verifies an Intel TDX or AMD SEV-SNP report that is bound to that verification run. Engy determines the type again each time the worker is verified, including after a retry.
 
-Every server needs a CPU TEE, Intel TDX or AMD SEV-SNP, except servers with 8 B200 or 8 B300 GPUs. If Engy does not receive valid CPU TEE evidence from any other server, verification fails. GPU confidential-computing mode is not required.
+Every server needs a CPU TEE, Intel TDX or AMD SEV-SNP, except servers with 8 B200 or 8 B300 GPUs. If Engy does not receive valid CPU TEE evidence from any other server, verification fails.
 
 ## Hardware requirements
 
