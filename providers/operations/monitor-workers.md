@@ -50,4 +50,4 @@ You can view network data without signing in at [provider.engy.ai](https://provi
 * **Latency**: Keep the 99th percentile time per output token below the model's target, if one applies.
 * **Connection**: A worker receives traffic only while it is connected. It resumes when it reconnects.
 
-For the scoring rules, see [Subnet 53](../overview/subnet-53.md#how-engy-scores-your-work).
+For the scoring rules, see [Subnet 53](../overview/subnet-53.md#how-engy-scores-your-traffic).
