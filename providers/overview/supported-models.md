@@ -28,7 +28,7 @@ When you register a worker, the portal lists the models that are currently accep
 
 ## Score rates
 
-Each model has its own score rate, which determines how much your work on that model is worth. The score rate is based on the per-token prices that users pay, which are listed in [Models and pricing](https://docs.engy.ai/get-started/models-and-pricing).
+Each model has its own score rate, which determines how much your work on that model is worth. The score rate is based on the per-token prices that users pay, which are listed in [Pricing](https://engy.ai/pricing).
 
 ## Choose a model
 
