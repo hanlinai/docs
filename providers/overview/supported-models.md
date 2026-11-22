@@ -28,7 +28,7 @@ When you register a worker, the portal lists the models that are currently accep
 
 ## Score rates
 
-Each model has its own score rate, which determines how much your work on that model is worth. The score rate is based on the per-token prices that users pay, which are listed in [Pricing](https://engy.ai/pricing).
+Your work on a model is valued at that model's list prices for input, cached input, and output tokens, which are listed in [Pricing](https://engy.ai/pricing). Each model's traffic is paid from its own sub-pool (the five models with the most buyer spend each have one; the rest share one), so you compete only with other providers of the same model. For the current split, see the [Allocation](https://provider.engy.ai/allocation) page.
 
 ## Choose a model
 

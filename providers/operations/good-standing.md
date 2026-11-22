@@ -27,4 +27,4 @@ This page explains the rules that providers must follow and what happens when a 
 
 The **Dashboard** shows a notice if your hotkey is not registered on SN53, if a penalty is active on your account, or if Engy has disabled your account. While your account is disabled, you cannot revoke or onboard workers. To appeal, contact the subnet operators.
 
-For details about scoring, see [Subnet 53](../overview/subnet-53.md#how-engy-scores-your-work).
+For details about scoring, see [Subnet 53](../overview/subnet-53.md#how-engy-scores-your-traffic).
