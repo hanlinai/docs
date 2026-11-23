@@ -37,16 +37,16 @@ On preferred hardware (8 B200 or 8 B300 GPUs), the fastest way to do stages 1 to
 {% step %}
 ### Get the image reference
 
-Engy pins the image by digest. Download the onboarding script, and read the pinned reference from it:
+The onboarding script names the current Engy image. Download the script, and read the image reference from it:
 
 ```bash
 curl -fsSLO https://provider.engy.ai/engy-onboard.sh
 sed -n 's/^ENGY_IMAGE="${ENGY_IMAGE:-\(.*\)}"$/\1/p' engy-onboard.sh
 ```
 
-The output is the reference, in the form `ghcr.io/...@sha256:...`. Use it exactly. Do not use a tag.
+The output is the reference, for example `ghcr.io/hanlinai/engy-golden-serve:prod`. Use it exactly. The tag tracks the current release, so pull it again (`docker compose pull`) before you recreate the container.
 
-A copy of the script from a source repository has the literal `__ENGY_IMAGE__` in place of the reference. Download the script from `provider.engy.ai` as shown, or set `ENGY_IMAGE` to a digest-pinned image.
+A copy of the script from a source repository has the literal `__ENGY_IMAGE__` in place of the reference. Download the script from `provider.engy.ai` as shown, or set `ENGY_IMAGE` to an image reference with an explicit tag or digest.
 
 ```bash
 docker pull "<image reference>"
