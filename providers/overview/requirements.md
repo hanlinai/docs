@@ -31,7 +31,7 @@ The worker does not need a public IP address that it knows itself. Engy records 
 
 ## Software
 
-You run workers with the Engy image, which the onboarding script pins by digest. For details, see [Quickstart](../onboarding/quickstart.md).
+You run workers with the Engy image, which the onboarding script sets for you. For details, see [Quickstart](../onboarding/quickstart.md).
 
 The image contains the inference engine, the Engy worker software, and the management tools. You can run it on any host or GPU cloud that can start a container with NVIDIA GPU access. For details, see [Boot a worker](../onboarding/boot-a-worker.md).
 
