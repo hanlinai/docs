@@ -15,3 +15,7 @@
 * [Credits and payments](account-and-billing/credits-and-payments.md)
 * [Usage and logs](account-and-billing/usage-and-logs.md)
 * [Management API](account-and-billing/management-api.md)
+
+## Integrations
+
+* [New API](integrations/new-api.md)
