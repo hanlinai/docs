@@ -58,7 +58,7 @@ The `provider` object carries these fields:
 * `region_only` and `region_exclude`: restrict the worker region
 * `require_proof`: request a proof with the response
 
-For details, see **The provider object** in the Inference API overview of the API reference.
+For details, see [The provider object](https://docs.engy.ai/api-reference/inference-api/overview#the-provider-object) and [Region routing](https://docs.engy.ai/using-the-api/region-routing).
 
 To keep the `provider` object, choose one of the following:
 
@@ -92,7 +92,7 @@ New API decides whether to retry a failed request on another channel from the HT
 * New API never retries status `504`, which Engy returns when the model server times out.
 * For non-streaming requests that run longer than 15 seconds, Engy sends the status `200` early to keep the connection open. A late error then appears in the response body. New API detects the error but does not retry it. Use streaming for long requests.
 
-For the error format, see **Errors** in the Inference API overview of the API reference.
+For the error format, see [Errors and limits](https://docs.engy.ai/using-the-api/errors-and-limits). For errors in a stream, see [Errors during a stream](https://docs.engy.ai/using-the-api/streaming#errors-during-a-stream).
 
 ## Measure latency
 
