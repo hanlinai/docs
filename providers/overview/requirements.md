@@ -18,7 +18,7 @@ This page lists what you need before you onboard a worker. It is intended for pr
 | GPU | NVIDIA GPUs. The GPU class and count depend on the model. For details, see [Supported models](supported-models.md). |
 | Architecture | x86-64 (amd64). Arm64 systems, such as GB200 and GB300, are not supported. |
 | Storage | Enough disk space for the Engy image (about 14 GB) and the model weights. Keep the runtime state and the model weights on persistent host directories, so that they survive a container rebuild. |
-| Model disk (preferred hardware) | The filesystem that holds the model weights must have a total size of at least 1000 GB for 8 B200 GPUs, or 2000 GB for 8 B300 GPUs. |
+| Model disk (preferred hardware) | The model weights must be on an NVMe drive of at least 0.96 TB for 8 B200 GPUs, or at least 1.92 TB for 8 B300 GPUs. The sizes are the drive's nominal capacity, as sold. Engy checks the total size of the filesystem that holds the model weights, and accepts a filesystem of at least 95% of the nominal capacity: 912 GB for 8 B200 GPUs, or 1824 GB for 8 B300 GPUs. This allows for formatting overhead. For example, a 1.92 TB drive usually shows about 1870 GB in `df`. |
 
 ## Network
 
