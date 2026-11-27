@@ -17,7 +17,7 @@ Raw link for agents: `https://raw.githubusercontent.com/hanlinai/docs/main/provi
 ## Rules
 
 * **Take the server offline before** you stop the worker container, reboot, upgrade drivers, change GPUs or disks, or move the server. This includes "quick" restarts.
-* **Wait for `safeToStop`** before you stop anything.
+* **Wait for `safeToStop`** before you stop anything. This usually takes under 2 minutes; do not wait more than 10.
 * **Bring back the same machine.** Engy pins the server's identity when it goes offline: the SSH endpoint, the GPU class, GPU UUIDs and serials, the SSH host key, machine-id, and NIC MACs. A return with a different SSH endpoint or different GPUs is refused, and the server must be onboarded again. Changes to the host key, machine-id, or MACs (for example after an OS reinstall) are reviewed by hand.
 * **Come back within 7 days.** A server that is still offline after 7 days must be onboarded again.
 * The operation applies to the whole **server**: every worker on it stops taking requests, including workers that appear while it is offline. Do not use it to stop a single worker.
@@ -52,7 +52,9 @@ The base URL is `https://provider.engy.ai`. Every call below sends the key in th
      "https://provider.engy.ai/api/portal/servers/$SERVER_ID/availability"
    ```
 
-   Continue when `safeToStop` is `true`, which means no requests are in flight. If it is still `false` after 15 minutes, report `inflight` to the miner and ask before you stop. Long generations can take several minutes.
+   Continue when `safeToStop` is `true`, which means no requests are in flight.
+
+   **Expected wait: usually under 2 minutes.** Most requests finish within seconds; only about 2% run longer than 2 minutes, and a few long generations run 5–10 minutes. If `safeToStop` is still `false` after 2 minutes, keep polling. After **10 minutes** you may stop the server anyway. Requests that fail while the server is offline are never penalised; only those few buyers are affected.
 
 3. **Do the maintenance.**
 
