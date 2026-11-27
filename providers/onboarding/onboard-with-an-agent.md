@@ -180,6 +180,10 @@ Errors: `404` `{"error":"no such server"}`.
 
 Response: `{"worker": {...}, "events": [...]}`. The `worker` object has `workerId`, `model`, `sshHost`, `sshPort`, `gpuModel`, `gpuCount`, `gpuIds`, `provisioning`, `reason`, `createdAt`, `updatedAt`, and `retryable`. The GPU fields are what the server reported when it booted.
 
+### Take a server offline or bring it back
+
+`GET` / `POST /api/portal/servers/<serverId>/availability`. Before any maintenance that stops the server (container restart, reboot, driver or hardware change), take it offline and wait for `safeToStop`. Bring it back afterwards. A server that goes away without this loses one hour of pool uptime when buyer requests fail on it. See [Take a server offline](../operations/take-a-server-offline.md) for the procedure, the states, and the full reference.
+
 ### Register or change the endpoint
 
 `POST /api/portal/tee-workers/<workerId>/endpoint`

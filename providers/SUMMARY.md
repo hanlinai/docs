@@ -28,6 +28,7 @@
 
 * [Worker states](operations/worker-states.md)
 * [Manage workers](operations/manage-workers.md)
+* [Take a server offline](operations/take-a-server-offline.md)
 * [Monitor workers](operations/monitor-workers.md)
 * [Rotate your gateway key](operations/rotate-your-gateway-key.md)
 * [Good standing](operations/good-standing.md)
