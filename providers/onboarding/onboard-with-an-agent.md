@@ -234,7 +234,7 @@ Response: `{"models": ["<model>", ...]}`, the models that currently accept new w
 | --- | --- | --- |
 | `0` | Success. | Read the summary. |
 | `2` | Bad input, such as a missing or malformed Miner Key, or an invalid option. | Fix the input, and rerun. |
-| `3` | Preflight failed. The message names the check: root access, GPUs and NVIDIA driver (580 or later), verification policy (preferred hardware and its model-disk floor), free disk space, SSH port in use, reachability of the gateway and the provider, or `python3`. | Report it to the miner. Fix only what the miner approves. |
+| `3` | Preflight failed. The message names the check: root access, GPUs and NVIDIA driver (580 or later), verification policy (preferred hardware and its model-disk NVMe tier), free disk space, SSH port in use, reachability of the gateway and the provider, or `python3`. | Report it to the miner. Fix only what the miner approves. |
 | `4` | Docker or the worker container failed. | Read the Docker output. Check `docker compose -p engy logs`. |
 | `5` | A provider API call failed. | Check the Miner Key and the network, and rerun. |
 | `6` | The model and endpoint were refused: `422` means the hardware is not accepted for that model, and `409` means a conflict, such as the server already running another model. | For `409` on a switch, rerun with `--switch-model` only if the miner agreed. For `422`, tell the miner which hardware the response allows. |
